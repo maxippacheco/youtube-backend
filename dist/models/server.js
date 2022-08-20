@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const routes_1 = require("../routes");
-// import db from '../db/connection';
+const db_1 = require("../db");
 class Server {
     constructor() {
         this.apiPaths = {
@@ -24,18 +24,17 @@ class Server {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '8000';
         // Métodos iniciales
-        // this.dbConnection();
+        this.dbConnection();
         this.middlewares();
         this.routes();
     }
     dbConnection() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                // await db.authenticate();
-                console.log('Database online');
+                yield db_1.db.dbConnection();
             }
             catch (error) {
-                // throw new Error( error );
+                console.log("Could not connect to the db");
             }
         });
     }

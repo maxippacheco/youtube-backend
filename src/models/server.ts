@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import { authRoutes } from '../routes';
 
-// import db from '../db/connection';
+import { db } from '../db';
 
 
 class Server {
@@ -18,7 +18,7 @@ class Server {
         this.port = process.env.PORT || '8000';
 
         // Métodos iniciales
-        // this.dbConnection();
+        this.dbConnection();
         this.middlewares();
         this.routes();
     }
@@ -27,13 +27,11 @@ class Server {
 
         try {
             
-            // await db.authenticate();
-            console.log('Database online');
-
+            await db.dbConnection();
         } catch (error) {
-            // throw new Error( error );
+            console.log("Could not connect to the db");
+               
         }
-
     }
 
     middlewares() {
