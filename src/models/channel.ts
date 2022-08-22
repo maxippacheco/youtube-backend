@@ -1,11 +1,12 @@
 import mongoose, { model, Model, Schema } from "mongoose";
+import { IChannel } from "../interfaces";
 
 const channelSchema = new Schema({
 	name: {
 		type: String,
 		required: [true, 'Name is required']
 	},
-	userId: [{ type: mongoose.Types.ObjectId, ref: 'User', required: true }],
+	userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
 	profileImg: {
 		type: String
 	},
@@ -40,7 +41,7 @@ channelSchema.methods.toJSON = function(){
 }
 
 
-const Channel: Model<any> = mongoose.models.Channel || model('Channel', channelSchema);
+const Channel: Model<IChannel> = mongoose.models.Channel || model('Channel', channelSchema);
 
 
 export default Channel;

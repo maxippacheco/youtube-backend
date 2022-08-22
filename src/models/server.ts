@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { authRoutes } from '../routes';
 
+import { authRoutes, channelRoutes } from '../routes';
 import { db } from '../db';
 
 
@@ -10,7 +10,8 @@ class Server {
     private app: Application;
     private port: string;
     private apiPaths = {
-        auth: '/api/auth'
+        auth: '/api/auth',
+        channel: '/api/channel',
     }
 
     constructor() {
@@ -26,7 +27,6 @@ class Server {
     async dbConnection() {
 
         try {
-            
             await db.dbConnection();
         } catch (error) {
             console.log("Could not connect to the db");
@@ -48,7 +48,8 @@ class Server {
 
 
     routes() {
-        this.app.use( this.apiPaths.auth, authRoutes )
+        this.app.use( this.apiPaths.auth, authRoutes );
+        this.app.use( this.apiPaths.channel, channelRoutes );
     }
 
 

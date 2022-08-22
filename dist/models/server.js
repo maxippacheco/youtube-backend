@@ -19,7 +19,8 @@ const db_1 = require("../db");
 class Server {
     constructor() {
         this.apiPaths = {
-            auth: '/api/auth'
+            auth: '/api/auth',
+            channel: '/api/channel',
         };
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '8000';
@@ -48,6 +49,7 @@ class Server {
     }
     routes() {
         this.app.use(this.apiPaths.auth, routes_1.authRoutes);
+        this.app.use(this.apiPaths.channel, routes_1.channelRoutes);
     }
     listen() {
         this.app.listen(this.port, () => {

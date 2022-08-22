@@ -8,39 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateJWT = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.createChannel = void 0;
 const models_1 = require("../models");
-const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.header('auth-token');
-    if (!token) {
+const createChannel = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.body;
+    const [existChannelWithUser, existChannelName] = yield Promise.all([
+        models_1.Channel.findOne({ userId: req.user._id }),
+        models_1.Channel.findOne({ name })
+    ]);
+    if (existChannelName) {
         return res.status(400).json({
             ok: false,
-            message: 'Token not valid'
+            message: 'You can not have this user name'
         });
     }
-    try {
-        const { uid } = jsonwebtoken_1.default.verify(token, process.env.PRIVATE_KEY || '');
-        const user = yield models_1.User.findById(uid);
-        if (!user) {
-            return res.status(400).json({
-                ok: false,
-                message: "The user does not exist"
-            });
-        }
-        req.user = user;
-        next();
-    }
-    catch (error) {
-        console.log(error);
+    if (existChannelWithUser) {
         return res.status(400).json({
             ok: false,
-            message: "Token not valid"
+            message: 'You can not have two channels'
         });
     }
+    const channel = new models_1.Channel({ name, userId: req.user._id });
+    yield channel.save();
+    res.json({
+        ok: true,
+        channel
+    });
 });
-exports.validateJWT = validateJWT;
+exports.createChannel = createChannel;

@@ -40,7 +40,7 @@ const channelSchema = new mongoose_1.Schema({
         type: String,
         required: [true, 'Name is required']
     },
-    userId: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true }],
+    userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true },
     profileImg: {
         type: String
     },
