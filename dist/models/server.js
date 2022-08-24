@@ -21,6 +21,7 @@ class Server {
         this.apiPaths = {
             auth: '/api/auth',
             channel: '/api/channel',
+            subscribe: '/api/sub',
         };
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '8000';
@@ -50,6 +51,7 @@ class Server {
     routes() {
         this.app.use(this.apiPaths.auth, routes_1.authRoutes);
         this.app.use(this.apiPaths.channel, routes_1.channelRoutes);
+        this.app.use(this.apiPaths.subscribe, routes_1.subscribeRoutes);
     }
     listen() {
         this.app.listen(this.port, () => {

@@ -25,7 +25,7 @@ const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
     try {
         const { uid } = jsonwebtoken_1.default.verify(token, process.env.PRIVATE_KEY || '');
-        const user = yield models_1.User.findById(uid);
+        const user = yield models_1.User.findById(uid, '-password');
         if (!user) {
             return res.status(400).json({
                 ok: false,

@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.channel = exports.auth = void 0;
+exports.subscribe = exports.channel = exports.auth = void 0;
 exports.auth = __importStar(require("./auth"));
 exports.channel = __importStar(require("./channel"));
+exports.subscribe = __importStar(require("./subscribe"));

@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 
-import { authRoutes, channelRoutes } from '../routes';
+import { authRoutes, channelRoutes, subscribeRoutes } from '../routes';
 import { db } from '../db';
 
 
@@ -12,6 +12,7 @@ class Server {
     private apiPaths = {
         auth: '/api/auth',
         channel: '/api/channel',
+        subscribe: '/api/sub',
     }
 
     constructor() {
@@ -50,6 +51,7 @@ class Server {
     routes() {
         this.app.use( this.apiPaths.auth, authRoutes );
         this.app.use( this.apiPaths.channel, channelRoutes );
+        this.app.use( this.apiPaths.subscribe, subscribeRoutes );
     }
 
 

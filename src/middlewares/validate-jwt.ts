@@ -18,7 +18,7 @@ export const validateJWT = async( req: Request, res: Response, next: NextFunctio
 		
 		const { uid }: any = jwt.verify(token, process.env.PRIVATE_KEY || '');
 
-		const user = await User.findById( uid );
+		const user = await User.findById( uid, '-password' );
 
 		if( !user ){
 			return res.status(400).json({
