@@ -12,26 +12,7 @@ const channelSchema = new Schema({
 	},
 	subscribers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
 	subscribedTo: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-	videos: [
-		{
-			name: {
-				type: String,
-				required: [ true, "The name of the video is requried"]
-			},
-			videoURL: {
-				type: String,
-				required: [ true, "The URL of the video is requried"]
-			},
-			description: {
-				type: String,
-				required: [ true, "The video needs a description"]
-			},
-			likes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-			dislikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-		}
-	]
-
-
+	videos: [{ type: mongoose.Types.ObjectId, ref:'Video' }]
 });
 
 channelSchema.methods.toJSON = function(){

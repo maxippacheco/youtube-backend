@@ -35,22 +35,25 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const channelSchema = new mongoose_1.Schema({
+const videoSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        required: [true, 'Name is required']
+        required: [true, "The name of the video is requried"]
     },
-    userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true },
-    profileImg: {
-        type: String
+    videoURL: {
+        type: String,
+        required: [true, "The URL of the video is requried"]
     },
-    subscribers: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
-    subscribedTo: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
-    videos: [{ type: mongoose_1.default.Types.ObjectId, ref: 'Video' }]
+    description: {
+        type: String,
+        required: [true, "The video needs a description"]
+    },
+    likes: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
+    dislikes: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
 });
-channelSchema.methods.toJSON = function () {
+videoSchema.methods.toJSON = function () {
     const _a = this.toObject(), { __v } = _a, data = __rest(_a, ["__v"]);
     return data;
 };
-const Channel = mongoose_1.default.models.Channel || (0, mongoose_1.model)('Channel', channelSchema);
-exports.default = Channel;
+const Video = mongoose_1.default.models.Channel || (0, mongoose_1.model)('Video', videoSchema);
+exports.default = Video;

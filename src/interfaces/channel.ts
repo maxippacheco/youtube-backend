@@ -9,10 +9,10 @@ export interface IChannel {
 	subscribers:  any[];
 	subscribedTo: any[];
 	_id:          string;
-	videos:       IVideos[];
+	videos:       IVideo[];
 }
 
-export interface IVideos {
+export interface IVideo {
 	name: 			 string;
 	videoURL: 	 string;
 	description: string;

@@ -9,8 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createChannel = void 0;
+exports.uploadVideo = exports.createChannel = exports.getChannels = void 0;
 const models_1 = require("../models");
+const getChannels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const [total, channels] = yield Promise.all([
+        models_1.Channel.countDocuments().lean(),
+        models_1.Channel.find().lean()
+    ]);
+    res.json({
+        ok: true,
+        total,
+        channels
+    });
+});
+exports.getChannels = getChannels;
 const createChannel = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
     const [existChannelWithUser, existChannelName] = yield Promise.all([
@@ -37,3 +49,6 @@ const createChannel = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     });
 });
 exports.createChannel = createChannel;
+const uploadVideo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+exports.uploadVideo = uploadVideo;
