@@ -1,8 +1,11 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 
 import { authRoutes, channelRoutes, subscribeRoutes } from '../routes';
 import { db } from '../db';
+
+
 
 
 class Server {
@@ -45,6 +48,13 @@ class Server {
 
         // Carpeta pública
         this.app.use( express.static('public') );
+
+        // upload files
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        })); 
     }
 
 

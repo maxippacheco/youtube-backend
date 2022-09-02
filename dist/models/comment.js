@@ -35,31 +35,18 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const videoSchema = new mongoose_1.Schema({
-    name: {
-        type: String,
-        required: [true, "The name of the video is requried"]
-    },
-    videoURL: {
-        type: String,
-        required: [true, "The URL of the video is requried"]
-    },
-    channelId: {
-        type: mongoose_1.default.Types.ObjectId,
-        ref: 'Channel',
-        required: [true, "The ID of the channel is requried"]
-    },
+const commentSchema = new mongoose_1.Schema({
     description: {
         type: String,
         required: [true, "The video needs a description"]
     },
-    likes: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
+    userId: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
     dislikes: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
-    comments: [{ type: mongoose_1.default.Types.ObjectId, ref: 'Comment' }]
+    likes: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
 }, { timestamps: true });
-videoSchema.methods.toJSON = function () {
+commentSchema.methods.toJSON = function () {
     const _a = this.toObject(), { __v } = _a, data = __rest(_a, ["__v"]);
     return data;
 };
-const Video = mongoose_1.default.models.Video || (0, mongoose_1.model)('Video', videoSchema);
+const Video = mongoose_1.default.models.Comment || (0, mongoose_1.model)('Comment', commentSchema);
 exports.default = Video;

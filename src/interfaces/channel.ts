@@ -18,4 +18,12 @@ export interface IVideo {
 	description: string;
 	likes: 			 string[];
 	dislikes: 	 string[];
+	channelId:   string;
+}
+
+export interface IComment {
+	userId: 	   string;
+	description: string;
+	likes: 			 string[];
+	dislikes: 	 string[];
 }

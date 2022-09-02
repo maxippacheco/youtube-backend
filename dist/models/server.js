@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const routes_1 = require("../routes");
 const db_1 = require("../db");
 class Server {
@@ -47,6 +48,12 @@ class Server {
         this.app.use(express_1.default.json());
         // Carpeta pública
         this.app.use(express_1.default.static('public'));
+        // upload files
+        this.app.use((0, express_fileupload_1.default)({
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true
+        }));
     }
     routes() {
         this.app.use(this.apiPaths.auth, routes_1.authRoutes);

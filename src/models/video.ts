@@ -10,13 +10,19 @@ const videoSchema = new Schema({
 		type: String,
 		required: [ true, "The URL of the video is requried"]
 	},
+	channelId: {
+		type: mongoose.Types.ObjectId,
+		ref: 'Channel',
+		required: [ true, "The ID of the channel is requried"]
+	},
 	description: {
 		type: String,
 		required: [ true, "The video needs a description"]
 	},
 	likes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
 	dislikes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-});
+	comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }]
+}, { timestamps: true });
 
 videoSchema.methods.toJSON = function(){
 	const { __v, ...data } = this.toObject();
@@ -25,7 +31,7 @@ videoSchema.methods.toJSON = function(){
 }
 
 
-const Video: Model<IVideo> = mongoose.models.Channel || model('Video', videoSchema);
+const Video: Model<IVideo> = mongoose.models.Video || model('Video', videoSchema);
 
 
 export default Video;

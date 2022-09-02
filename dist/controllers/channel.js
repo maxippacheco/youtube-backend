@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadVideo = exports.createChannel = exports.getChannels = void 0;
+const cloudinary_1 = require("cloudinary");
 const models_1 = require("../models");
 const getChannels = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const [total, channels] = yield Promise.all([
@@ -50,5 +51,43 @@ const createChannel = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createChannel = createChannel;
 const uploadVideo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const { name, description } = req.body;
+    // const user = req.user;
+    const { channelId } = req.params;
+    // const channel = await Channel.findById(channelId);
+    // todo fix validation
+    // if( user._id === channel?.userId ){
+    // 	return res.status(400).json({
+    // 		ok: false,
+    // 		message: 'You can not upload videos to this channel',
+    // 		user: user._id,
+    // 		channel: channel?.userId
+    // 	})
+    // }
+    if (!((_a = req.files) === null || _a === void 0 ? void 0 : _a.file)) {
+        return res.status(400).json({
+            ok: false,
+            message: 'Send the video correctly'
+        });
+    }
+    const { tempFilePath } = (_b = req.files) === null || _b === void 0 ? void 0 : _b.file;
+    try {
+        // Validar que el canal sea del usuario
+        const { secure_url } = yield cloudinary_1.v2.uploader.upload(tempFilePath, { resource_type: 'video' });
+        const video = new models_1.Video({ name, description, videoURL: secure_url, channelId });
+        yield video.save();
+        return res.json({
+            ok: true,
+            video
+        });
+    }
+    catch (error) {
+        console.log(error);
+        return res.json({
+            ok: false,
+            message: error
+        });
+    }
 });
 exports.uploadVideo = uploadVideo;
